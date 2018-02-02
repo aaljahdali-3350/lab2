@@ -357,7 +357,7 @@ void normalize2d(Vec v)
 static const Flt MAX_ANGLE_DEGREE = 360.0f;
 static const Flt RIGHT_ANGLE_DEGREE = 90.0f;
 static const Flt OFFSETTED_BY = 20.0f;
-static const Flt VELOCITY_ACCELERATOR = (float)ydiff * 0.001f;
+static const Flt VELOCITY_ACCELERATOR = 0.001f;
 
 void check_mouse(XEvent *e)
 {
@@ -435,8 +435,8 @@ void check_mouse(XEvent *e)
 				//convert angle to a vector
 				Flt xdir = cos(rad);
 				Flt ydir = sin(rad);
-				g.ship.vel[0] += xdir * VELOCITY_ACCELERATOR;
-				g.ship.vel[1] += ydir * VELOCITY_ACCELERATOR;
+				g.ship.vel[0] += xdir * (float)ydiff * VELOCITY_ACCELERATOR;
+				g.ship.vel[1] += ydir * (float)ydiff * VELOCITY_ACCELERATOR;
 				Flt speed = sqrt(g.ship.vel[0]*g.ship.vel[0]+
 					g.ship.vel[1]*g.ship.vel[1]);
 				if (speed > 15.0f) {
