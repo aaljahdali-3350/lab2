@@ -354,8 +354,11 @@ void normalize2d(Vec v)
 	v[1] *= len;
 }
 
-	static const Flt MAX_ANGLE_DEGREE = 360.0f;
-	static const Flt OFFSETTED_BY = 20.0f;
+static const Flt MAX_ANGLE_DEGREE = 360.0f;
+static const Flt RIGHT_ANGLE_DEGREE = 90.0f;
+static const Flt OFFSETTED_BY = 20.0f;
+static const Flt VELOCITY_ACCELERATOR = (float)ydiff * 0.001f;
+
 void check_mouse(XEvent *e)
 {
 	//Was a mouse button clicked?
@@ -387,7 +390,7 @@ void check_mouse(XEvent *e)
 					b->vel[0] = g.ship.vel[0];
 					b->vel[1] = g.ship.vel[1];
 					//convert ship angle to radians
-					Flt rad = ((g.ship.angle+90.0) / MAX_ANGLE_DEGREE) * PI * 2.0;
+					Flt rad = ((g.ship.angle+RIGHT_ANGLE_DEGREE) / MAX_ANGLE_DEGREE) * PI * 2.0;
 					//convert angle to a vector
 					Flt xdir = cos(rad);
 					Flt ydir = sin(rad);
@@ -428,12 +431,12 @@ void check_mouse(XEvent *e)
 				//mouse moved along the y-axis.
 				//apply thrust
 				//convert ship angle to radians
-				Flt rad = ((g.ship.angle+90.0) / 360.0f) * PI * 2.0;
+				Flt rad = ((g.ship.angle+RIGHT_ANGLE_DEGREE) / MAX_ANGLE_DEGREE) * PI * 2.0;
 				//convert angle to a vector
 				Flt xdir = cos(rad);
 				Flt ydir = sin(rad);
-				g.ship.vel[0] += xdir * (float)ydiff * 0.001f;
-				g.ship.vel[1] += ydir * (float)ydiff * 0.001f;
+				g.ship.vel[0] += xdir * VELOCITY_ACCELERATOR;
+				g.ship.vel[1] += ydir * VELOCITY_ACCELERATOR;
 				Flt speed = sqrt(g.ship.vel[0]*g.ship.vel[0]+
 					g.ship.vel[1]*g.ship.vel[1]);
 				if (speed > 15.0f) {
@@ -692,7 +695,7 @@ void physics()
 	if (gl.keys[XK_Up]) {
 		//apply thrust
 		//convert ship angle to radians
-		Flt rad = ((g.ship.angle+90.0) / 360.0f) * PI * 2.0;
+		Flt rad = ((g.ship.angle+RIGHT_ANGLE_DEGREE) / MAX_ANGLE_DEGREE) * PI * 2.0;
 		//convert angle to a vector
 		Flt xdir = cos(rad);
 		Flt ydir = sin(rad);
@@ -724,7 +727,7 @@ void physics()
 				b->vel[0] = g.ship.vel[0];
 				b->vel[1] = g.ship.vel[1];
 				//convert ship angle to radians
-				Flt rad = ((g.ship.angle+90.0) / 360.0f) * PI * 2.0;
+				Flt rad = ((g.ship.angle+RIGHT_ANGLE_DEGREE) / MAX_ANGLE_DEGREE) * PI * 2.0;
 				//convert angle to a vector
 				Flt xdir = cos(rad);
 				Flt ydir = sin(rad);
@@ -780,7 +783,7 @@ void render()
 	if (gl.keys[XK_Up] || g.mouseThrustOn) {
 		int i;
 		//draw thrust
-		Flt rad = ((g.ship.angle+90.0) / 360.0f) * PI * 2.0;
+		Flt rad = ((g.ship.angle+RIGHT_ANGLE_DEGREE) / MAX_ANGLE_DEGREE) * PI * 2.0;
 		//convert angle to a vector
 		Flt xdir = cos(rad);
 		Flt ydir = sin(rad);
