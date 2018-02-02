@@ -1,7 +1,8 @@
 //
 //
 //
-//
+//modified by: Abdullah Aljahdali
+//date:    Feb 1, 18
 //program: asteroids.cpp
 //author:  Gordon Griesel
 //date:    2014 - 2018
